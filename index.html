@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Grid Chronicles — F1 Beyond the Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080808;
+      --bg2:      #101010;
+      --bg3:      #181818;
+      --border:   #1e1e1e;
+      --text:     #e0e0e0;
+      --muted:    #666;
+      --muted2:   #333;
+      --red:      #e10600;
+      --orange:   #ff6b35;
+      --purple:   #a78bfa;
+      --green:    #34d399;
+      --grey:     #444;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .hero {
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 40% at 50% 70%, rgba(225,6,0,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.35s forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--red);
+      display: block;
+    }
+    .hero-sub {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+    .scroll-hint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .scroll-hint span {
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--red), transparent);
+      animation: growLine 1.5s 1.2s ease-out both, pulse 2s 2.7s ease-in-out infinite;
+    }
+    @keyframes growLine { from { height: 0; opacity: 0; } to { height: 48px; opacity: 1; } }
+    @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ════════════════════════════════
+       SEASON CHAPTER — Apple-style sticky
+       Col 1: sticky year label
+       Col 2: spine + date labels
+       Col 3: scrolling cards
+    ════════════════════════════════ */
+    .chapter {
+      display: grid;
+      grid-template-columns: 160px 140px 1fr;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Col 1: sticky year panel */
+    .chapter-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 1.5rem 2rem 2rem;
+    }
+    .sidebar-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -3px;
+      color: var(--red);
+      opacity: 0.12;
+      transition: opacity 0.6s;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      user-select: none;
+    }
+    .chapter.active .sidebar-year { opacity: 1; }
+    .sidebar-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      margin-top: 0.75rem;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      transition: color 0.4s;
+    }
+    .chapter.active .sidebar-label { color: var(--muted); }
+
+    /* Col 2: spine column with dates */
+    .chapter-spine {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      /* spine line */
+    }
+    .chapter-spine::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, transparent 2%, var(--muted2) 8%, var(--muted2) 92%, transparent 98%);
+      transition: background 0.6s;
+    }
+    .chapter.active .chapter-spine::before {
+      background: linear-gradient(to bottom, transparent 2%, var(--red) 8%, var(--red) 92%, transparent 98%);
+    }
+
+    /* Each date node on the spine */
+    .spine-node {
+      display: flex;
+      align-items: center;
+      position: relative;
+      /* height must match entry height — set via JS */
+    }
+    .spine-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      flex-shrink: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      top: 50%;
+      margin-top: -5px;
+    }
+    .spine-node.race     .spine-dot { background: var(--grey);   box-shadow: 0 0 0 1px var(--grey); }
+    .spine-node.story    .spine-dot { background: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
+    .spine-node.transfer .spine-dot { background: var(--purple); box-shadow: 0 0 0 1px var(--purple); }
+    .spine-node.milestone .spine-dot { background: var(--green); box-shadow: 0 0 0 1px var(--green); }
+
+    .spine-date {
+      position: absolute;
+      left: calc(50% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      line-height: 1.3;
+    }
+    .spine-date-day {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: block;
+      font-variant-numeric: tabular-nums;
+    }
+    .spine-date-month {
+      font-size: 0.58rem;
+      color: var(--muted2);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Col 3: cards feed */
+    .chapter-feed {
+      padding: 6rem 3rem 6rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ════════════════════════════════
+       ENTRY CARDS
+    ════════════════════════════════ */
+    .entry {
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .entry.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ── STORY card (drama / transfer / milestone) ── */
+    .story-card {
+      border-radius: 2px;
+      border-left: 2px solid;
+      padding: 2rem 2.5rem;
+      position: relative;
+    }
+    .story-card.controversy  { border-color: var(--orange); background: #0d0804; }
+    .story-card.transfer     { border-color: var(--purple); background: #0a0710; }
+    .story-card.milestone    { border-color: var(--green);  background: #050d09; }
+
+    .story-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .story-tag {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+    .controversy .story-tag  { color: var(--orange); }
+    .transfer    .story-tag  { color: var(--purple); }
+    .milestone   .story-tag  { color: var(--green); }
+    .story-date {
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+    .story-body {
+      font-size: 0.9rem;
+      color: #999;
+      line-height: 1.85;
+      max-width: 580px;
+    }
+
+    /* ── RACE card ── */
+    .race-card {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      position: relative;
+    }
+    .race-card:hover { border-color: #2a2a2a; }
+
+    .race-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--muted2);
+      line-height: 1;
+      min-width: 3rem;
+      text-align: right;
+      padding-top: 2px;
+      font-variant-numeric: tabular-nums;
+      user-select: none;
+    }
+    .race-divider {
+      width: 1px;
+      align-self: stretch;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .race-body { flex: 1; min-width: 0; }
+    .race-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .race-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ccc;
+    }
+    .race-date {
+      font-size: 0.65rem;
+      color: var(--muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .race-location {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .race-flag-img {
+      height: 13px;
+      width: auto;
+      border-radius: 1px;
+      object-fit: cover;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+    .race-story {
+      font-size: 0.8rem;
+      color: #777;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .podium {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .podium-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: #888;
+    }
+    .podium-item + .podium-item { padding-left: 0.5rem; border-left: 1px solid var(--border); }
+    .p-medal { font-size: 0.85rem; }
+    .p-driver { color: #aaa; font-weight: 500; }
+    .p-team { color: var(--muted); font-size: 0.65rem; }
+    .team-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+    footer p { font-size: 0.72rem; color: var(--muted2); line-height: 2; }
+
+    /* ════════════════════════════════
+       LOADING STATE
+    ════════════════════════════════ */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 40vh;
+      gap: 1rem;
+    }
+    .loading-spinner {
+      width: 32px; height: 32px;
+      border: 2px solid var(--border);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading p { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 768px) {
+      .chapter { grid-template-columns: 80px 80px 1fr; }
+      .chapter-sidebar { padding: 2rem 0.5rem 2rem 1rem; }
+      .sidebar-year { font-size: 3rem; letter-spacing: -2px; }
+      .chapter-feed { padding: 4rem 1.5rem 4rem 1.5rem; gap: 2rem; }
+      .story-card { padding: 1.25rem 1.5rem; }
+    }
+    @media (max-width: 500px) {
+      .chapter { grid-template-columns: 0 60px 1fr; }
+      .chapter-sidebar { display: none; }
+      .chapter-feed { padding: 3rem 1rem 3rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Formula 1 · 2023 — 2024</div>
+  <h1>The Grid<em>Chronicles</em></h1>
+  <p class="hero-sub">Beyond the podium. The transfers, feuds, dominance, and shocks — the real story of two seasons of Formula 1.</p>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TIMELINE (rendered by JS) -->
+<div id="app">
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading race data…</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-title">The Grid Chronicles</div>
+  <p>
+    Race data: <a href="https://openf1.org" style="color:var(--red);text-decoration:none">OpenF1 API</a> · Off-track stories: curated<br>
+    A narrative timeline of Formula 1 · 2023–2024 prototype
+  </p>
+</footer>
+
+<script>
+// ── Off-track editorial events (curated, not from API) ──
+const EVENTS = [
+  { id:"ev-001", date:"2024-02-15", season:2024, type:"controversy",
+    title:"The Horner Investigation",
+    tag:"🔥 Controversy",
+    body:"Christian Horner investigated by Red Bull's parent company for alleged inappropriate behaviour toward a female employee. The story detonated across pre-season coverage and split the paddock. Horner denied everything and retained his role — but the whispers never fully stopped." },
+  { id:"ev-002", date:"2023-12-01", season:2023, type:"transfer",
+    title:"Hamilton to Ferrari",
+    tag:"🔄 Driver Move",
+    body:"In the most seismic transfer announcement in a generation, Lewis Hamilton confirmed he would leave Mercedes — the team he'd won six of his seven championships with — to join Ferrari for 2025. Nobody saw it coming. The paddock went quiet for about ten minutes." },
+  { id:"ev-003", date:"2023-11-19", season:2023, type:"milestone",
+    title:"Verstappen's Fourth Title",
+    tag:"⭐ Milestone",
+    body:"Max Verstappen clinches his fourth consecutive World Championship, becoming the youngest four-time champion in history. He won 19 of 22 races in 2023. The conversation had long since shifted from 'can anyone stop him?' to 'where does he rank all-time?'" },
+  { id:"ev-004", date:"2023-09-15", season:2023, type:"transfer",
+    title:"Sainz Axed for Hamilton",
+    tag:"🔄 Driver Move",
+    body:"Carlos Sainz learned he had been dropped by Ferrari to make way for Lewis Hamilton — delivered via a phone call. No ceremony. He then went to Australia the following season and won a race for the team that had just fired him. He made his point." },
+  { id:"ev-005", date:"2023-03-20", season:2023, type:"milestone",
+    title:"Alonso's Renaissance",
+    tag:"⭐ Milestone",
+    body:"Two races into the 2023 season, Fernando Alonso had two podiums. At 41 years old, on a team most had written off. The paddock spent years trying to retire him. He didn't notice. The Alonso renaissance was officially, undeniably real." },
+];
+
+// ── Optional editorial stories keyed by race id ──
+const RACE_STORIES = {
+  '2024-03': "Ferrari's first 1-2 in years — Sainz won it knowing he'd already been axed for Hamilton. Verstappen's DNF handed them the result, but it was a statement anyway.",
+  '2024-01': "Verstappen wins the opener, but it was meant to be a Red Bull 1-2. Sainz slipped past Perez in the closing laps — a gutsy drive from a man playing with house money.",
+  '2023-16': "Singapore — Sainz's victory. One of the few races in 2023 that Verstappen didn't win. A reminder that when Red Bull faltered, Ferrari could still pounce.",
+  '2023-03': "Melbourne chaos — safety car reshuffled the grid. Hamilton inherited P2. Melbourne did what Melbourne does.",
+  '2023-11': "Norris P2 at Silverstone. McLaren's resurgence was officially underway — the crowd had something to cheer beyond just Hamilton.",
+};
+
+const MEDAL = ['🥇','🥈','🥉'];
+
+function fmtDate(str) {
+  const d = new Date(str + 'T12:00:00Z');
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+function fmtShort(str) {
+  const d = new Date(str + 'T12:00:00Z');
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function storyTypeClass(type) {
+  if (type === 'controversy') return 'controversy';
+  if (type === 'transfer') return 'transfer';
+  return 'milestone';
+}
+
+function renderStory(ev) {
+  const cls = storyTypeClass(ev.type);
+  return `
+    <div class="entry">
+      <div class="story-card ${cls}">
+        <div class="story-meta">
+          <span class="story-tag">${ev.tag}</span>
+          <span class="story-date">${fmtDate(ev.date)}</span>
+        </div>
+        <div class="story-title">${ev.title}</div>
+        <div class="story-body">${ev.body}</div>
+      </div>
+    </div>`;
+}
+
+function renderRace(r) {
+  const story = RACE_STORIES[r.id] || r.story || '';
+  const podiumHTML = r.podium.slice(0, 3).map((p, i) =>
+    `<div class="podium-item">
+      <span class="p-medal">${MEDAL[i]}</span>
+      <span class="team-dot" style="background:#${p.colour || '666'}"></span>
+      <span class="p-driver">${p.driver}</span>
+      <span class="p-team">${p.team}</span>
+    </div>`
+  ).join('');
+
+  const storyHTML = story ? `<div class="race-story">${story}</div>` : '';
+  const flagHTML = r.flag
+    ? `<img class="race-flag-img" src="${r.flag}" alt="${r.country}" loading="lazy" />`
+    : '';
+
+  return `
+    <div class="entry">
+      <div class="race-card">
+        <div class="race-number">${String(r.round).padStart(2,'0')}</div>
+        <div class="race-divider"></div>
+        <div class="race-body">
+          <div class="race-header">
+            <span class="race-name">${r.name}</span>
+            <span class="race-date">${fmtShort(r.date)}</span>
+          </div>
+          <div class="race-location">${flagHTML}${r.location}${r.country ? ', ' + r.country : ''}</div>
+          ${storyHTML}
+          <div class="podium">${podiumHTML || '<span style="color:var(--muted);font-size:0.75rem">Results unavailable</span>'}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function spineNodeClass(item) {
+  if (item.kind === 'race') return 'race';
+  const t = item.data.type;
+  if (t === 'controversy') return 'story';
+  if (t === 'transfer') return 'transfer';
+  return 'milestone';
+}
+
+function buildChapter(year, items) {
+  const spineNodesHTML = items.map(item => {
+    const cls = spineNodeClass(item);
+    const d = new Date(item.date + 'T12:00:00Z');
+    const day = d.toLocaleDateString('en-GB', { day: 'numeric' });
+    const month = d.toLocaleDateString('en-GB', { month: 'short' });
+    return `
+      <div class="spine-node ${cls}">
+        <div class="spine-dot"></div>
+        <div class="spine-date">
+          <span class="spine-date-day">${day} ${month}</span>
+          <span class="spine-date-month">${year}</span>
+        </div>
+      </div>`;
+  }).join('');
+
+  const entriesHTML = items.map(item =>
+    item.kind === 'event' ? renderStory(item.data) : renderRace(item.data)
+  ).join('');
+
+  return `
+    <div class="chapter" data-year="${year}">
+      <div class="chapter-sidebar">
+        <div class="sidebar-year">${year}</div>
+        <div class="sidebar-label">Season</div>
+      </div>
+      <div class="chapter-spine" id="spine-${year}">
+        ${spineNodesHTML}
+      </div>
+      <div class="chapter-feed" id="feed-${year}">
+        ${entriesHTML}
+      </div>
+    </div>`;
+}
+
+async function loadData() {
+  // Try to load from API-fetched file, fall back to inline
+  try {
+    const res = await fetch('./data/races-api.json');
+    if (!res.ok) throw new Error('not found');
+    const json = await res.json();
+    return json.races || [];
+  } catch {
+    // If running from file:// or file missing, use embedded stub
+    console.warn('Could not load races-api.json — using embedded stub data');
+    return [];
+  }
+}
+
+async function main() {
+  const races = await loadData();
+
+  // Merge races + events into one stream
+  const allItems = [];
+  races.forEach(r => allItems.push({ date: r.date, season: r.season, kind: 'race', data: r }));
+  EVENTS.forEach(e => allItems.push({ date: e.date, season: e.season, kind: 'event', data: e }));
+
+  // Sort newest first
+  allItems.sort((a, b) => b.date.localeCompare(a.date));
+
+  // Group by season
+  const seasons = {};
+  allItems.forEach(item => {
+    if (!seasons[item.season]) seasons[item.season] = [];
+    seasons[item.season].push(item);
+  });
+
+  const sortedYears = Object.keys(seasons).sort((a, b) => b - a);
+  const html = sortedYears.map(yr => buildChapter(yr, seasons[yr])).join('');
+  document.getElementById('app').innerHTML = html;
+
+  // ── Sync spine node heights to entry card heights ──
+  function syncSpineHeights() {
+    document.querySelectorAll('.chapter').forEach(chapter => {
+      const entries = [...chapter.querySelectorAll('.chapter-feed .entry')];
+      const nodes   = [...chapter.querySelectorAll('.chapter-spine .spine-node')];
+      // Also account for feed padding-top: find the offset
+      const feed    = chapter.querySelector('.chapter-feed');
+      const feedPadTop = parseFloat(getComputedStyle(feed).paddingTop) || 0;
+
+      // Add top spacer to spine to match feed padding
+      const spine = chapter.querySelector('.chapter-spine');
+      spine.style.paddingTop = feedPadTop + 'px';
+
+      entries.forEach((entry, i) => {
+        if (nodes[i]) {
+          // Use outer height including margin
+          const style = getComputedStyle(entry);
+          const marginBottom = parseFloat(style.marginBottom) || 0;
+          const h = entry.getBoundingClientRect().height + marginBottom;
+          nodes[i].style.height = h + 'px';
+        }
+      });
+    });
+  }
+
+  // Run after fonts/images settle
+  if (document.fonts) {
+    document.fonts.ready.then(syncSpineHeights);
+  } else {
+    setTimeout(syncSpineHeights, 300);
+  }
+  window.addEventListener('resize', syncSpineHeights);
+
+  // ── Intersection observers ──
+  // 1. Fade-in entries (slide in from right)
+  const entryObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        entryObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.entry').forEach(el => entryObs.observe(el));
+
+  // 2. Activate chapter (spine goes red, year glows) when in view
+  const chapterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      e.target.classList.toggle('active', e.isIntersecting);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.chapter').forEach(el => chapterObs.observe(el));
+}
+
+main();
+</script>
+</body>
+</html>

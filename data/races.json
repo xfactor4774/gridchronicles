@@ -1,0 +1,154 @@
+{
+  "races": [
+    {
+      "id": "2024-05",
+      "season": 2024,
+      "round": 5,
+      "name": "Chinese Grand Prix",
+      "date": "2024-04-21",
+      "circuit": "Shanghai International Circuit",
+      "location": "Shanghai, China",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Charles Leclerc", "team": "Ferrari" },
+        { "position": 3, "driver": "Carlos Sainz", "team": "Ferrari" }
+      ],
+      "story": "Sprint weekend, Ferrari pushing hard."
+    },
+    {
+      "id": "2024-04",
+      "season": 2024,
+      "round": 4,
+      "name": "Japanese Grand Prix",
+      "date": "2024-04-07",
+      "circuit": "Suzuka Circuit",
+      "location": "Suzuka, Japan",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Sergio Perez", "team": "Red Bull Racing" },
+        { "position": 3, "driver": "Carlos Sainz", "team": "Ferrari" }
+      ],
+      "story": "Verstappen clinically back to business."
+    },
+    {
+      "id": "2024-03",
+      "season": 2024,
+      "round": 3,
+      "name": "Australian Grand Prix",
+      "date": "2024-03-24",
+      "circuit": "Albert Park Circuit",
+      "location": "Melbourne, Australia",
+      "podium": [
+        { "position": 1, "driver": "Carlos Sainz", "team": "Ferrari" },
+        { "position": 2, "driver": "Charles Leclerc", "team": "Ferrari" },
+        { "position": 3, "driver": "Max Verstappen", "team": "Red Bull Racing" }
+      ],
+      "story": "Ferrari's first 1-2 in years — Verstappen DNF handed it to them."
+    },
+    {
+      "id": "2024-02",
+      "season": 2024,
+      "round": 2,
+      "name": "Saudi Arabian Grand Prix",
+      "date": "2024-03-09",
+      "circuit": "Jeddah Street Circuit",
+      "location": "Jeddah, Saudi Arabia",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Sergio Perez", "team": "Red Bull Racing" },
+        { "position": 3, "driver": "Charles Leclerc", "team": "Ferrari" }
+      ],
+      "story": "Red Bull locked out front row but drama behind them."
+    },
+    {
+      "id": "2024-01",
+      "season": 2024,
+      "round": 1,
+      "name": "Bahrain Grand Prix",
+      "date": "2024-03-02",
+      "circuit": "Bahrain International Circuit",
+      "location": "Sakhir, Bahrain",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Carlos Sainz", "team": "Ferrari" },
+        { "position": 3, "driver": "Charles Leclerc", "team": "Ferrari" }
+      ],
+      "story": "Dominant Verstappen opener, Red Bull 1-2 thwarted by Sainz."
+    },
+    {
+      "id": "2023-11",
+      "season": 2023,
+      "round": 11,
+      "name": "British Grand Prix",
+      "date": "2023-07-09",
+      "circuit": "Silverstone Circuit",
+      "location": "Silverstone, UK",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Lando Norris", "team": "McLaren" },
+        { "position": 3, "driver": "Lewis Hamilton", "team": "Mercedes" }
+      ],
+      "story": "Norris 2nd — McLaren's resurgence begins."
+    },
+    {
+      "id": "2023-08",
+      "season": 2023,
+      "round": 8,
+      "name": "Monaco Grand Prix",
+      "date": "2023-05-28",
+      "circuit": "Circuit de Monaco",
+      "location": "Monte Carlo, Monaco",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Fernando Alonso", "team": "Aston Martin" },
+        { "position": 3, "driver": "Charles Leclerc", "team": "Ferrari" }
+      ],
+      "story": "Home crowd watches Leclerc finish 3rd at Monaco — always bittersweet."
+    },
+    {
+      "id": "2023-03",
+      "season": 2023,
+      "round": 3,
+      "name": "Australian Grand Prix",
+      "date": "2023-03-30",
+      "circuit": "Albert Park Circuit",
+      "location": "Melbourne, Australia",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Lewis Hamilton", "team": "Mercedes" },
+        { "position": 3, "driver": "Fernando Alonso", "team": "Aston Martin" }
+      ],
+      "story": "Safety car chaos reshuffled the order."
+    },
+    {
+      "id": "2023-02",
+      "season": 2023,
+      "round": 2,
+      "name": "Saudi Arabian Grand Prix",
+      "date": "2023-03-19",
+      "circuit": "Jeddah Street Circuit",
+      "location": "Jeddah, Saudi Arabia",
+      "podium": [
+        { "position": 1, "driver": "Sergio Perez", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Fernando Alonso", "team": "Aston Martin" },
+        { "position": 3, "driver": "Charles Leclerc", "team": "Ferrari" }
+      ],
+      "story": "Perez takes the win, Alonso on podium again."
+    },
+    {
+      "id": "2023-01",
+      "season": 2023,
+      "round": 1,
+      "name": "Bahrain Grand Prix",
+      "date": "2023-03-05",
+      "circuit": "Bahrain International Circuit",
+      "location": "Sakhir, Bahrain",
+      "podium": [
+        { "position": 1, "driver": "Max Verstappen", "team": "Red Bull Racing" },
+        { "position": 2, "driver": "Sergio Perez", "team": "Red Bull Racing" },
+        { "position": 3, "driver": "Fernando Alonso", "team": "Aston Martin" }
+      ],
+      "story": "New era begins — Alonso shocks with 3rd on Aston Martin debut."
+    }
+  ]
+}

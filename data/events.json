@@ -1,0 +1,49 @@
+{
+  "events": [
+    {
+      "id": "event-001",
+      "date": "2024-02-15",
+      "type": "controversy",
+      "title": "Horner Investigation",
+      "description": "Christian Horner investigated by Red Bull for alleged inappropriate behavior — shockwaves through the paddock.",
+      "category": "team politics",
+      "severity": "high"
+    },
+    {
+      "id": "event-002",
+      "date": "2023-12-01",
+      "type": "driver move",
+      "title": "Hamilton to Ferrari",
+      "description": "Lewis Hamilton announces shock move to Ferrari for 2025, ending his Mercedes era.",
+      "category": "driver transfer",
+      "severity": "high"
+    },
+    {
+      "id": "event-003",
+      "date": "2023-11-19",
+      "type": "milestone",
+      "title": "Verstappen's 4th Title",
+      "description": "Max Verstappen wins 4th consecutive World Championship — youngest to do so.",
+      "category": "championship",
+      "severity": "medium"
+    },
+    {
+      "id": "event-004",
+      "date": "2023-09-15",
+      "type": "driver move",
+      "title": "Sainz Out at Ferrari",
+      "description": "Carlos Sainz confirmed dropped by Ferrari for 2025 to make way for Hamilton — brutal delivery.",
+      "category": "driver transfer",
+      "severity": "medium"
+    },
+    {
+      "id": "event-005",
+      "date": "2023-03-20",
+      "type": "milestone",
+      "title": "Alonso's Renaissance",
+      "description": "Fernando Alonso's Aston Martin renaissance begins — 41 years old, two podiums in two races.",
+      "category": "career",
+      "severity": "low"
+    }
+  ]
+}
