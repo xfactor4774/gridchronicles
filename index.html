@@ -53,6 +53,22 @@
         radial-gradient(ellipse 70% 40% at 50% 70%, rgba(225,6,0,0.07) 0%, transparent 70%);
       pointer-events: none;
     }
+    .hero-car {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-car img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      opacity: 0.12;
+      filter: grayscale(100%);
+    }
+    .hero > *:not(.hero-car) { position: relative; z-index: 1; }
     .hero-grid {
       position: absolute;
       inset: 0;
@@ -474,6 +490,72 @@
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
+  <div class="hero-car" style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden">
+    <img src="./f1-overhead.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.12;filter:grayscale(100%);display:block;" />
+    <svg viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" fill="white" style="display:none">
+      <!-- SIDE PROFILE F1 CAR -->
+
+      <!-- Front wing lower plate -->
+      <rect x="42" y="224" width="188" height="9" rx="3"/>
+      <!-- Front wing endplates -->
+      <rect x="42" y="200" width="7" height="33" rx="2"/>
+      <rect x="223" y="200" width="7" height="33" rx="2"/>
+      <!-- Front wing upper flap -->
+      <rect x="60" y="213" width="165" height="6" rx="2"/>
+
+      <!-- Nose cone -->
+      <path d="M230,218 L340,208 L340,226 Z"/>
+
+      <!-- Main body / floor -->
+      <path d="M340,208 C380,205 420,200 470,196 C520,192 560,190 610,190 C680,190 730,192 780,196 C820,200 850,206 870,212 L870,226 C850,230 820,234 780,236 C730,238 680,238 610,238 C560,238 520,238 470,238 C420,238 380,236 340,232 Z"/>
+
+      <!-- Sidepod -->
+      <path d="M540,190 C570,185 620,183 670,184 C710,185 740,188 760,192 L760,220 C740,222 710,223 670,223 C620,223 570,222 540,218 Z"/>
+
+      <!-- Cockpit opening -->
+      <path d="M470,190 C490,175 520,165 550,162 C580,159 610,160 630,164 C650,168 660,175 660,182 L660,190 C640,188 600,187 560,187 C520,187 490,188 470,190 Z"/>
+
+      <!-- Halo -->
+      <path d="M490,182 C510,165 540,156 570,154 C600,152 628,156 640,166" stroke="white" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <rect x="558" y="154" width="10" height="30" rx="3"/>
+
+      <!-- Rear wing main plane -->
+      <rect x="940" y="128" width="130" height="10" rx="3"/>
+      <!-- Rear wing second element -->
+      <rect x="950" y="142" width="115" height="7" rx="2"/>
+      <!-- Rear wing endplates -->
+      <rect x="940" y="128" width="8" height="82" rx="2"/>
+      <rect x="1062" y="128" width="8" height="82" rx="2"/>
+      <!-- Rear wing pillar -->
+      <rect x="995" y="138" width="18" height="72" rx="3"/>
+
+      <!-- DRS beam wing -->
+      <rect x="880" y="168" width="70" height="6" rx="2"/>
+
+      <!-- Front tyre -->
+      <circle cx="270" cy="245" r="42"/>
+      <circle cx="270" cy="245" r="26" fill="#0a0a0a"/>
+      <!-- Front tyre detail -->
+      <circle cx="270" cy="245" r="10" fill="white"/>
+
+      <!-- Rear tyre -->
+      <circle cx="860" cy="248" r="50"/>
+      <circle cx="860" cy="248" r="31" fill="#0a0a0a"/>
+      <!-- Rear tyre detail -->
+      <circle cx="860" cy="248" r="12" fill="white"/>
+
+      <!-- Front suspension arm -->
+      <line x1="270" y1="210" x2="340" y2="218" stroke="white" stroke-width="4"/>
+      <!-- Rear suspension -->
+      <line x1="860" y1="210" x2="820" y2="220" stroke="white" stroke-width="5"/>
+
+      <!-- Floor / diffuser -->
+      <path d="M340,232 L870,236 L900,248 L820,252 Z"/>
+
+      <!-- Exhaust -->
+      <ellipse cx="892" cy="210" rx="10" ry="5"/>
+    </svg>
+  </div>
   <div class="hero-eyebrow">Formula 1 · 2023 — 2024</div>
   <h1>The Grid<em>Chronicles</em></h1>
   <p class="hero-sub">Beyond the podium. The transfers, feuds, dominance, and shocks — the real story of two seasons of Formula 1.</p>
@@ -588,10 +670,10 @@ function renderRace(r) {
         <div class="race-divider"></div>
         <div class="race-body">
           <div class="race-header">
+            ${flagHTML}
             <span class="race-name">${r.name}</span>
             <span class="race-date">${fmtShort(r.date)}</span>
           </div>
-          <div class="race-location">${flagHTML}${r.location}${r.country ? ', ' + r.country : ''}</div>
           ${storyHTML}
           <div class="podium">${podiumHTML || '<span style="color:var(--muted);font-size:0.75rem">Results unavailable</span>'}</div>
         </div>
